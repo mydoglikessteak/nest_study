@@ -6,6 +6,4 @@ import { TasksService } from './tasks.service';
   controllers: [TaskController],
   providers: [TasksService],
 })
-export class TaskModule {
-  constructor(private TasksService: TasksService) {}
-}
+export class TaskModule {}
