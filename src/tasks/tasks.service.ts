@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDTO } from './dto/create-task-dto';
+import { getTaskFilterDTO } from './dto/get-task-filter-dto';
 
 //for start the project with debug on just put
 /**yarn start:dev
@@ -14,6 +15,25 @@ export class TasksService {
 
   GetAllTasks(): Task[] {
     return this.tasks;
+  }
+
+  GetWithFilters(filterDTO: getTaskFilterDTO): Task[] {
+    const { status, search } = filterDTO;
+
+    let tasks = this.GetAllTasks();
+
+    if (status) {
+      tasks = tasks.filter((task) => task.status === status);
+    }
+    if (search) {
+      tasks = tasks.filter((task) => {
+        if (task.title.includes(search) || task.title.includes(search)) {
+          return true;
+        }
+        return false;
+      });
+    }
+    return tasks;
   }
 
   createTask(CreateTaskDTO: CreateTaskDTO): Task {
