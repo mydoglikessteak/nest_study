@@ -12,6 +12,7 @@ import { Task, TaskStatus } from './tasks.model';
 import { TasksService } from './tasks.service';
 import { CreateTaskDTO } from './dto/create-task-dto';
 import { getTaskFilterDTO } from './dto/get-task-filter-dto';
+import { UpdateTaskStatusDTO } from './dto/update-task-dto';
 
 // for generate componnets like controller and modules in the same application
 // always remember to put the same name on nest g controller tasks(name of the folder);
@@ -46,8 +47,9 @@ export class TaskController {
   @Patch('/:id/status')
   updateTaskStatus(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus,
+    @Body() UpdateTaskStatusDTO: UpdateTaskStatusDTO,
   ): Task {
+    const { status } = UpdateTaskStatusDTO;
     return this.TasksService.UpdateTaskStatus(id, status);
   }
 }
